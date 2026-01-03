@@ -2,11 +2,13 @@ function Header() {
   return (
     <header>
       <div>
-        <h2 className="logo">Mi Favorita</h2>
+        <h2 className="logo">Store Logo</h2>
       </div>
-      <div className="header-actions">
+      <div className="header-container">
         <div className="user-avatar">
-          <span>EG</span>
+          <span>
+            <p>EG</p>
+          </span>
         </div>
       </div>
     </header>

@@ -1,12 +1,12 @@
-import { defineConfig } from 'prisma/config'
-import { DATABASE_URL } from './src/secrets'
+import { defineConfig } from "prisma/config";
+import { DATABASE_URL } from "./src/secrets";
 
 export default defineConfig({
-    schema: 'prisma/schema.prisma',
-    migrations: {
-        path: 'prisma/migrations',
-    },
-    datasource: {
-        url: DATABASE_URL,
-    },
-})
+  schema: "prisma/schema.prisma",
+  migrations: {
+    path: "prisma/migrations",
+  },
+  datasource: {
+    url: DATABASE_URL,
+  },
+});
