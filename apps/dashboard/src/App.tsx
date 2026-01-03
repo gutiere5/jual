@@ -8,7 +8,7 @@ function App() {
       <Header />
       <ContentCotainer />
       <SidePanel />
-      <footer>footer</footer>
+      {/* <footer>footer</footer> */}
     </div>
   );
 }
