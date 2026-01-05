@@ -7,6 +7,32 @@ datasource db {
   provider = "postgresql"
 }
 
+enum TransactionType {
+  PURCHASE
+  SALE
+  RETURN
+  WASTE
+  ADJUSTMENT
+}
+
+enum WasteReason {
+  EXPIRED
+  DAMAGED
+  THEFT
+  MISTAKE
+  OTHER
+}
+
+enum UnitOfMeasure {
+  EA
+  LB
+  OZ
+  KG
+  G
+  L
+  ML
+}
+
 model user {
   id         Int      @id @default(autoincrement())
   email      String   @unique
@@ -26,16 +52,16 @@ model category {
 }
 
 model item {
-  id                  Int           @id @default(autoincrement())
-  clover_id           String?       @unique @db.VarChar(50)
-  sku                 String        @unique @db.VarChar(100)
-  name                String?       @db.VarChar(255)
-  uom                 String?       @db.VarChar(20)
+  id                  Int            @id @default(autoincrement())
+  clover_id           String?        @unique @db.VarChar(50)
+  sku                 String         @unique @db.VarChar(100)
+  name                String?        @db.VarChar(255)
+  uom                 UnitOfMeasure?
   category_id         Int?
   vendor_id           Int?
-  low_stock_threshold Int?          @default(10)
-  category            category?     @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  vendor              vendor?       @relation(fields: [vendor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  low_stock_threshold Int?           @default(10)
+  category            category?      @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  vendor              vendor?        @relation(fields: [vendor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   stock_batch         stock_batch[]
   transaction         transaction[]
   waste               waste[]
@@ -57,15 +83,15 @@ model stock_batch {
 }
 
 model transaction {
-  id               Int          @id @default(autoincrement())
+  id               Int             @id @default(autoincrement())
   item_id          Int?
   batch_id         Int?
-  clover_order_id  String?      @db.VarChar(100)
-  type             String?      @db.VarChar(50)
-  quantity         Decimal?     @db.Decimal(12, 3)
-  transaction_date DateTime?    @default(now()) @db.Timestamp(6)
-  stock_batch      stock_batch? @relation(fields: [batch_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  item             item?        @relation(fields: [item_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  clover_order_id  String?         @db.VarChar(100)
+  type             TransactionType
+  quantity         Decimal?        @db.Decimal(12, 3)
+  transaction_date DateTime?       @default(now()) @db.Timestamp(6)
+  stock_batch      stock_batch?    @relation(fields: [batch_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  item             item?           @relation(fields: [item_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([clover_order_id], map: "transaction_index_clover_order_id")
 }
@@ -84,7 +110,7 @@ model waste {
   item_id     Int?
   batch_id    Int?
   quantity    Decimal      @db.Decimal(12, 3)
-  reason      String       @db.VarChar(255)
+  reason      WasteReason
   created_at  DateTime     @default(now()) @db.Timestamp(6)
   stock_batch stock_batch? @relation(fields: [batch_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   item        item?        @relation(fields: [item_id], references: [id], onDelete: NoAction, onUpdate: NoAction)

@@ -5,7 +5,7 @@
   color-scheme: light;
   /* color-scheme: light dark; */
   color: black;
-  background-color: #e8eaed;
+  background-color: #e1eaef;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -19,6 +19,10 @@ body {
   min-height: 100vh;
 }
 
+button {
+  background-color: white;
+}
+
 .app-layout {
   min-height: 100vh;
   display: grid;
@@ -28,21 +32,21 @@ body {
 }
 
 footer {
-  color: blue;
+  color: pink;
   grid-row: 3;
-  grid-column: 1 / 2;
-  height: 50px;
+  grid-column: 1 / -1;
+  height: 20px;
+  text-align: center;
 }
 
 /* Header */
 header {
   grid-column: 1 / -1;
   grid-row: 1;
-  height: 50px;
-  padding: 16px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  height: 75px;
+  padding: 5px 24px;
+  display: grid;
+  grid-template-columns: subgrid;
 }
 
 header h2 {
@@ -59,8 +63,20 @@ header p {
   color: black;
 }
 
-.header-container {
+.logo {
+  grid-column: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
   display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.header-container {
+  grid-column: 2;
+  display: flex;
+  justify-self: end;
   align-items: center;
 }
 
@@ -81,7 +97,6 @@ header p {
 aside {
   grid-column: 1;
   grid-row: 2;
-
 
   overflow-y: auto;
   overflow-x: clip;
@@ -139,18 +154,24 @@ main h1 {
   margin-bottom: 8px;
 }
 
+main h3 {
+  margin-top: 0;
+}
+
 main button {
   background-color: white;
   border: none;
   align-items: center;
   text-align: left;
-  padding: 1% 2%;
-  margin: 1px 0;
+  padding: 5px 10px;
+  margin: 1px 5px;
   width: 100%;
+  height: 84px;
   cursor: pointer;
   transition: background-color 0.2s;
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3),
+  border-radius: 10px 10px 10px 10px;
+  box-shadow:
+    0 1px 3px rgba(60, 64, 67, 0.3),
     0 4px 8px rgba(60, 64, 67, 0.15);
 }
 
@@ -158,14 +179,82 @@ main button:hover {
   background-color: #f1f3f4;
 }
 
-.items-container {
+.items-content-container {
   overflow: hidden;
 }
 
-.item-description {
+.item-content-description {
   display: flex;
   justify-content: flex-start;
   flex-direction: row;
   gap: 20px;
 }
 
+/* item-details-page */
+.item-details-page {
+  margin: 0px 50px 0px 50px;
+  background-color: white;
+  border-radius: 20px;
+}
+.item-details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.item-details-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.item-button {
+  background-color: white;
+  border: none;
+  align-items: center;
+  text-align: left;
+  margin: 1px 5px;
+  width: auto;
+  height: 40px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.item-btn:hover {
+  background-color: var(--hover-bg);
+}
+
+.items-details-back-button {
+  width: 50px;
+  height: 40px;
+  border-radius: 10px;
+  justify-content: left;
+  cursor: pointer;
+  margin-left: -20px;
+}
+
+.items-details-back-button:hover {
+  background-color: #f1f3f4;
+}
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.items-table th {
+  text-align: left;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 12px 8px;
+  border-bottom: 1px solid black;
+}
+
+.items-table td {
+  text-align: left;
+  font-size: 18px;
+  font-weight: 400;
+  padding: 12px 8px;
+}

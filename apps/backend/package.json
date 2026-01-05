@@ -4,10 +4,6 @@
   "exports": {},
   "scripts": {
     "start": "npx nodemon",
-    "db:migrate:deploy": "prisma migrate deploy",
-    "db:migrate:dev": "prisma migrate dev",
-    "db:push": "prisma db push",
-    "db:seed": "tsx src/seed.ts",
     "dev": "tsup src/* --watch",
     "format": "prisma format",
     "generate": "prisma generate",
@@ -41,6 +37,6 @@
     "rimraf": "^5.0.5",
     "tsup": "^8.5.1",
     "tsx": "^4.19.1",
-    "typescript": "5.5.4"
+    "typescript": "^5.5.4"
   }
 }

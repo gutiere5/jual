@@ -3,8 +3,35 @@ import asyncHandler from "express-async-handler";
 import { prismaClient } from "..";
 
 export const getItems = asyncHandler(async (req: Request, res: Response) => {
-  const items = await prismaClient.item.findMany();
-  res.status(200).json({ items });
+  const items = await prismaClient.item.findMany({
+    include: {
+      category: {
+        select: {name: true},
+      },
+      stock_batch: {
+        select: {
+          quantity_remaining: true,
+        },
+        where: { quantity_remaining: {gt:0}},
+      }
+    }
+  });
+
+  const formattedItems = items.map((item) => {
+    const totalQuantity = item.stock_batch.reduce(
+      (sum, batch) => sum + Number(batch.quantity_remaining),
+      0
+    );
+      return  {
+    id: item.id,
+    name: item.name,
+    type: item.category?.name || null,
+    quatity_remaining: totalQuantity,
+    low_stock_threshold: item.low_stock_threshold,
+    uom: item.uom
+  };
+  });
+  res.status(200).json({ items: formattedItems });
 });
 
 export const getItemsByID = asyncHandler(

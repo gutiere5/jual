@@ -1,9 +1,7 @@
 function Header() {
   return (
     <header>
-      <div>
-        <h2 className="logo">Store Logo</h2>
-      </div>
+      <h2 className="logo">Store Logo</h2>
       <div className="header-container">
         <div className="user-avatar">
           <span>
