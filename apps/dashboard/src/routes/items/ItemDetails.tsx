@@ -38,18 +38,18 @@ function ItemDetails() {
             <tr>
               <th>ID</th>
               <th>Name</th>
-              <th>SKU</th>
+              <th>Category</th>
               <th>UOM</th>
-              <th>Low Stock Threshold</th>
+              <th>Quantity</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>{item.id}</td>
               <td>{item.name}</td>
-              <td>{item.sku}</td>
+              <td>{item.category_type}</td>
               <td>{item.uom}</td>
-              <td>{item.low_stock_threshold}</td>
+              <td>{item.quatity_remainning}</td>
             </tr>
           </tbody>
         </table>

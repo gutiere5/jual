@@ -14,6 +14,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, Component: ContentContainer, loader: contentItemsLoader },
+
       // { path: 'personal', Component: PersonalComponent }, // Add these
       // { path: 'security', Component: SecurityComponent },
       {

@@ -1,63 +1,45 @@
-import type { Item, Error } from '../types';
-
-let mockItems: Item[] = [
-  {
-    id: 2,
-    clover_id: null,
-    sku: '5465ad16adsfa',
-    name: 'Milk',
-    uom: 'each',
-    category_id: null,
-    vendor_id: null,
-    low_stock_threshold: 10,
-  },
-  {
-    id: 3,
-    clover_id: null,
-    sku: '5465aadfaadsfa',
-    name: 'Apple',
-    uom: 'each',
-    category_id: null,
-    vendor_id: null,
-    low_stock_threshold: 10,
-  },
-  {
-    id: 4,
-    clover_id: null,
-    sku: '546asdf3bhmadfaadsfa',
-    name: 'Orange',
-    uom: 'each',
-    category_id: null,
-    vendor_id: null,
-    low_stock_threshold: 10,
-  },
-];
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+import type { Item } from '../types';
+import apiClient from '../api/client';
 
 export const itemService = {
-  getAll: async (): Promise<Item[]> => {
-    await delay(500); // Simulate network delay
-    return [...mockItems];
+  createById: async () => {
+    const response = await apiClient.post<Item>('items');
+    console.log(response.config);
+    console.log(response.status);
+    console.log(response.statusText);
+    console.log(response.headers);
+    console.log(response.request);
+
+    return response.data;
   },
 
-  getById: async (id: number): Promise<Item | null> => {
-    await delay(300); // Simulate network delay
-    const item = mockItems.find((item) => item.id === id);
-    if (!item) {
-      const error: Error = {
-        statusText: 'Item not found',
-        message: `No item found with id ${id}`,
-        errorCode: 404,
-      };
-      throw error;
-    }
-    return item;
+  getAll: async () => {
+    const response = await apiClient.get<Item[]>('items');
+
+    console.log(response.config);
+    console.log(response.status);
+    console.log(response.statusText);
+    console.log(response.headers);
+    console.log(response.request);
+
+    return response.data;
   },
 
-  update: async (updatedItem: Item): Promise<Item> => {
-    await delay(400);
-    mockItems = mockItems.map((item) => (item.id === updatedItem.id ? updatedItem : item));
-    return updatedItem;
+  getById: async (id: number) => {
+    const response = await apiClient.get<Item>(`items/${id}`);
+
+    return response.data;
+  },
+
+  updateItem: async (updatedItem: Item): Promise<Item> => {
+    const response = await apiClient.put<Item>(`items/${updatedItem.id}`, updatedItem);
+
+    return response.data;
+  },
+
+  deleteItem: async (id: number) => {
+    const response = await apiClient.delete<Item>(`items./${id}`);
+
+    return response.data;
   },
 };

@@ -20,7 +20,7 @@ export async function editItemAction({ request, params }: ActionFunctionArgs) {
     low_stock_threshold: Number(updates.low_stock_threshold),
   };
 
-  await itemService.update(updatedItem);
+  await itemService.updateItem(updatedItem);
   return redirect(`/items/${itemId}`);
 }
 
