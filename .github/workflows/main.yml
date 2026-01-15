@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    name: 🏗️ Build and Lint
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Check out code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: 🟢 Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: 📦 Install Dependencies
+        run: |
+          echo "🚚 Installing dependencies with npm..."
+          npm ci
+          mkdir -p node_modules/.cache/turbo
+          echo "✅ Dependencies installed!"
+
+      - name: ⚡ Cache turbo build setup
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: 🛠️ Generate Prisma Client
+        run: |
+          echo "🧬 Generating Prisma Client..."
+          npm run generate
+          echo "✨ Prisma Client ready!"
+
+      - name: 🚀 Run CI tasks
+        run: |
+          echo "🏃 Starting Turbo tasks (Build, Lint, Test)..."
+          npm run ci
+          echo "🎉 All CI tasks completed successfully!"
+
+      - name: ✅ Summary
+        if: success()
+        run: |
+          echo "### 🚀 CI Pipeline passed successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "The build, lint, and smoke tests were all verified. ✨" >> $GITHUB_STEP_SUMMARY

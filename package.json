@@ -6,15 +6,16 @@
   },
   "scripts": {
     "build": "turbo run build",
-    "db:migrate:deploy": "turbo run db:migrate:deploy",
-    "db:migrate:dev": "turbo run db:migrate:dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "format": "turbo run format",
+    "ci": "turbo run build lint test",
+    "dev": "turbo run dev",
+    "generate": "turbo run generate",
     "db:push": "turbo run db:push",
     "db:seed": "turbo run db:seed",
-    "dev": "turbo run dev",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "generate": "turbo run generate",
-    "lint": "turbo run lint",
-    "ci": "turbo run build lint test"
+    "db:migrate:dev": "turbo run db:migrate:dev",
+    "db:migrate:deploy": "turbo run db:migrate:deploy"
   },
   "devDependencies": {
     "eslint-plugin-react": "^7.37.5",
