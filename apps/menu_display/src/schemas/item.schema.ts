@@ -1,27 +1,33 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-export const TransactionType = ['PURCHASE', 'SALE', 'RETURN', 'WASTE', 'ADJUSTMENT'] as const;
-export const UnitOfMeasure = ['EA', 'LB', 'OZ', 'KG', 'G', 'L', 'ML'] as const;
+export const TransactionType = [
+  "PURCHASE",
+  "SALE",
+  "RETURN",
+  "WASTE",
+  "ADJUSTMENT",
+] as const;
+export const UnitOfMeasure = ["EA", "LB", "OZ", "KG", "G", "L", "ML"] as const;
 export const Category = [
-  'PRODUCE',
-  'DAIRY',
-  'BEVERAGES',
-  'MEAT',
-  'SEAFOOD',
-  'BAKERY',
-  'DRY GOODS',
-  'CANNED GOODS',
-  'FROZEN',
-  'SPICES',
-  'HOUSEHOLD',
-  'PREPARED',
-  'OTHER',
+  "PRODUCE",
+  "DAIRY",
+  "BEVERAGES",
+  "MEAT",
+  "SEAFOOD",
+  "BAKERY",
+  "DRY GOODS",
+  "CANNED GOODS",
+  "FROZEN",
+  "SPICES",
+  "HOUSEHOLD",
+  "PREPARED",
+  "OTHER",
 ] as const;
 
 export const StockBatch = z.object({
   quantity_received: z.coerce.number().min(0),
   quantity_remaining: z.coerce.number().min(0),
-  expiration_date: z.iso.datetime().or(z.string()).optional().default('N/A'),
+  expiration_date: z.iso.datetime().or(z.string()).optional().default("N/A"),
   received_at: z.iso.datetime().or(z.string()).nullable().optional(),
   cost_of_purchase: z.string().nullable().optional(),
 });
@@ -34,7 +40,7 @@ export const Transaction = z.object({
 
 export const Waste = z.object({
   quantity: z.coerce.number(),
-  reason: z.string().min(1, 'Reason is required'),
+  reason: z.string().min(1, "Reason is required"),
   created_at: z.iso.datetime().or(z.string()),
 });
 
@@ -43,12 +49,13 @@ export const Item = z
     id: z.coerce.number().optional(),
     clover_id: z.string().nullable().optional(),
     sku: z.string().nullable().optional(),
-    name: z.string().min(1, 'Name is required'),
+    name: z.string().min(1, "Name is required"),
     uom: z.enum(UnitOfMeasure).optional(),
     vendor_id: z.number().nullable().optional(),
     low_stock_threshold: z.coerce.number().optional(),
     category: z.enum(Category),
     price: z.coerce.number().min(0).optional(),
+
     stock_batch: z.array(StockBatch).optional().default([]),
     transaction: z.array(Transaction).optional().default([]),
     waste: z.array(Waste).optional().default([]),

@@ -13,6 +13,6 @@ module.exports = {
         allowList: ["NODE_ENV"],
       },
     ],
-    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
   },
 };

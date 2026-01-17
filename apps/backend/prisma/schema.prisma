@@ -64,6 +64,7 @@ model item {
   sku                 String         @unique @db.VarChar(100)
   name                String?        @db.VarChar(255)
   uom                 UnitOfMeasure?
+  price               Decimal?       @db.Money
   vendor_id           Int?
   low_stock_threshold Int?           @default(10)
   category            Category
