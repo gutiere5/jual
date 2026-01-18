@@ -5,12 +5,13 @@
     "start": "npx nodemon",
     "build": "tsup src/index.ts",
     "dev": "tsup src/index.ts --watch --onSuccess \"npx nodemon\"",
-    "format": "prisma format ",
+    "db:format": "prisma format ",
     "generate": "prisma generate",
     "lint": "eslint . --max-warnings 0",
     "prebuild": "npm run generate",
     "predev": "npm run generate",
-    "studio": "prisma studio"
+    "studio": "prisma studio",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.2.0",

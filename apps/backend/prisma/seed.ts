@@ -15,6 +15,17 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   console.log("🌱 Starting seed...");
 
+  // Create a Default User
+  await prisma.user.upsert({
+    where: { email: "admin@example.com" },
+    update: {},
+    create: {
+      email: "admin@example.com",
+      username: "admin",
+      password: "hashed_password_here",
+    },
+  });
+
   // 1. Create Vendors
   const farmA = await prisma.vendor.upsert({
     where: { clover_id: "VEN_001" },
@@ -34,17 +45,20 @@ async function main() {
     create: { clover_id: "VEN_003", name: "Drink Distributors" },
   });
 
-  // 2. Create Items (Using Category Enum directly now!)
   const apple = await prisma.item.upsert({
-    where: { sku: "APPLE-001" },
+    where: { sku: "APPLE-002" },
     update: {},
     create: {
-      sku: "APPLE-001",
+      sku: "APPLE-002",
       name: "Gala Apple",
+      description: "Crisp, sweet, and juicy red apples from local orchards.",
+      ingredients: "100% Gala Apple",
+      image_url: "https://images.unsplash.com/photo-1560806887-1e4cd0b6bcd6",
       uom: UnitOfMeasure.EA,
-      category: Category.PRODUCE, // Direct Enum use
+      category: Category.PRODUCE,
       vendor_id: farmA.id,
       low_stock_threshold: 50,
+      price: 0.99,
     },
   });
 
@@ -54,10 +68,14 @@ async function main() {
     create: {
       sku: "MILK-001",
       name: "Organic Whole Milk",
+      description: "Grade A pasteurized whole milk from grass-fed cows.",
+      ingredients: "Organic Milk, Vitamin D3",
+      image_url: "https://images.unsplash.com/photo-1550583724-1255818c053b",
       uom: UnitOfMeasure.L,
       category: Category.DAIRY,
       vendor_id: farmA.id,
       low_stock_threshold: 10,
+      price: 4.5,
     },
   });
 
@@ -67,10 +85,14 @@ async function main() {
     create: {
       sku: "BREAD-001",
       name: "Sourdough Bread",
+      description: "Artisan sourdough loaf with a thick crust and airy center.",
+      ingredients: "Wheat Flour, Water, Sea Salt, Natural Sourdough Starter",
+      image_url: "https://images.unsplash.com/photo-1585478259715-876acc5be8eb",
       uom: UnitOfMeasure.EA,
       category: Category.BAKERY,
       vendor_id: bakeryCorp.id,
       low_stock_threshold: 15,
+      price: 6.0,
     },
   });
 
@@ -80,10 +102,31 @@ async function main() {
     create: {
       sku: "JUICE-001",
       name: "Orange Juice",
+      description: "Custom Description for juice",
+      image_url: "https://images.unsplash.com/photo-1585478259715-876acc5be8eb",
+      ingredients: "100% Orange Juice",
       uom: UnitOfMeasure.L,
       category: Category.BEVERAGES,
       vendor_id: bevDist.id,
       low_stock_threshold: 20,
+      price: 5.0,
+    },
+  });
+
+  const salmon = await prisma.item.upsert({
+    where: { sku: "FISH-001" },
+    update: {},
+    create: {
+      sku: "FISH-001",
+      name: "Wild Caught Salmon",
+      description: "Freshly caught Atlantic salmon fillets.",
+      ingredients: "Salmon",
+      image_url: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2",
+      uom: UnitOfMeasure.LB,
+      category: Category.SEAFOOD,
+      vendor_id: farmA.id,
+      low_stock_threshold: 5,
+      price: 18.99,
     },
   });
 
@@ -93,10 +136,14 @@ async function main() {
     create: {
       sku: "WATER-001",
       name: "Spring Water",
+      description: "Just Plain Water",
+      ingredients: "Water",
+      image_url: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2",
       uom: UnitOfMeasure.ML,
       category: Category.BEVERAGES,
       vendor_id: bevDist.id,
       low_stock_threshold: 100,
+      price: 5.99,
     },
   });
 
@@ -114,6 +161,16 @@ async function main() {
   const waterBatch = await prisma.stock_batch.create({
     data: {
       item_id: water.id,
+      quantity_received: 100,
+      quantity_remaining: 95,
+      cost_at_purchase: 0.5,
+      expiration_date: new Date("2026-03-01"),
+    },
+  });
+
+  const salmonBatch = await prisma.stock_batch.create({
+    data: {
+      item_id: salmon.id,
       quantity_received: 100,
       quantity_remaining: 95,
       cost_at_purchase: 0.5,
@@ -153,6 +210,12 @@ async function main() {
       {
         item_id: water.id,
         batch_id: waterBatch.id,
+        type: TransactionType.PURCHASE,
+        quantity: 100,
+      },
+      {
+        item_id: salmon.id,
+        batch_id: salmonBatch.id,
         type: TransactionType.PURCHASE,
         quantity: 100,
       },

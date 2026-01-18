@@ -3,7 +3,7 @@ import asyncHandler from "express-async-handler";
 import { prismaClient } from "..";
 import { hashSync, compareSync } from "bcrypt";
 import * as jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../secrets";
+import { JWT_SECRET, JWT_EXPIRES_IN } from "../secrets";
 
 export const signup = asyncHandler(async (req: Request, res: Response) => {
   const { email, username, password } = req.body;
@@ -40,7 +40,9 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
     throw new Error("Incorrect Password!");
   }
 
-  const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: "1h" });
+  const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
+    expiresIn: JWT_EXPIRES_IN as any,
+  });
 
   res.status(200).json({ user, token });
 });

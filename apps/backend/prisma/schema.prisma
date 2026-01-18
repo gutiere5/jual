@@ -38,6 +38,7 @@ enum Category {
   DAIRY
   BEVERAGES
   MEAT
+  FRUIT
   SEAFOOD
   BAKERY
   DRY_GOODS
@@ -46,7 +47,21 @@ enum Category {
   SPICES
   HOUSEHOLD
   PREPARED
+  BEEF
+  POULTRY
+  PORK
+  RESTAURANT
   OTHER
+}
+
+enum MeatChoice {
+  CARNE_ASADA
+  CHORIZO
+  TRIPA
+  LENGUA
+  PASTOR
+  CHICHARRONES
+  ASADA_DE_POLLO
 }
 
 model user {
@@ -61,12 +76,16 @@ model user {
 model item {
   id                  Int            @id @default(autoincrement())
   clover_id           String?        @unique @db.VarChar(50)
-  sku                 String         @unique @db.VarChar(100)
+  sku                 String?        @unique @db.VarChar(100)
   name                String?        @db.VarChar(255)
+  description         String?        @db.VarChar(255)
+  ingredients         String?        @db.VarChar(255)
   uom                 UnitOfMeasure?
   price               Decimal?       @db.Money
   vendor_id           Int?
   low_stock_threshold Int?           @default(10)
+  image_url           String?        @db.VarChar(255)
+  meat_choices        MeatChoice[]
   category            Category
   vendor              vendor?        @relation(fields: [vendor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   stock_batch         stock_batch[]

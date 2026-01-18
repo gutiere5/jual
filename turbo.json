@@ -1,10 +1,17 @@
 {
   "$schema": "https://turborepo.com/schema.json",
-  "globalEnv": ["DATABASE_URL", "PORT", "JWT_SECRET"],
+  "globalEnv": [
+    "DATABASE_URL",
+    "PORT",
+    "JWT_SECRET",
+    "CORS_ORIGIN",
+    "JWT_EXPIRES_IN"
+  ],
+  "globalDependencies": [".env*"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "inputs": ["$TURBO_DEFAULT$"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "lint": {

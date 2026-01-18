@@ -1,5 +1,4 @@
 import { itemService } from '../../services/itemServices';
-import { Category, Item, UnitOfMeasure } from '../../schemas/item.schema';
 import './ItemDetails.css';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
@@ -19,6 +18,7 @@ import {
   X,
   XCircle,
 } from 'lucide-react';
+import { Item, Category, UnitOfMeasure } from '@repo/types/item.schema';
 
 export const itemLoader = async ({ params }: LoaderFunctionArgs) => {
   const { itemId } = params as { itemId: string };

@@ -1,5 +1,5 @@
+import { Item } from '@repo/types/item.schema';
 import apiClient from '../api/client';
-import { Item } from '../schemas/item.schema';
 import { z } from 'zod';
 
 export const itemService = {

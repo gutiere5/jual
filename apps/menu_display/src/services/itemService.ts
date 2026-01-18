@@ -1,26 +1,24 @@
+import { Item } from "@repo/types/item.schema";
 import apiClient from "../api/client";
-import { Item } from "../schemas/item.schema";
 import { z } from "zod";
 
 export const itemService = {
   getAll: async () => {
     try {
       const response = await apiClient.get<{ items: unknown[] }>("item");
+      console.log(response.data);
       const parsed = z.array(Item).safeParse(response.data.items);
 
       if (!parsed.success) {
-        throw new Error(
-          `Data from server does not match Item schema:\n${z.prettifyError(parsed.error)}`,
-        );
+        const errorDetails = z.prettifyError(parsed.error);
+        throw new Error(`Schema validation failed:\n${errorDetails}`);
       }
 
       return parsed.data;
     } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Failed to get all items";
-      throw new Error(
-        `${errorMessage} (during getting all items from database)`,
-      );
+      throw new Error("Failed to fetch items from the service", {
+        cause: error,
+      });
     }
   },
 
