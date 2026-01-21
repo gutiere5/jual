@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import "./MeatDisplay1.css";
 import type { Item } from "@repo/types/item.schema";
+import MenuCard from "@repo/ui/MenuCard";
 
 function MeatDisplay1() {
   const items = useLoaderData() as Item[];
@@ -10,6 +11,7 @@ function MeatDisplay1() {
       {/* Main Content Grid */}
 
       <div className="menu-grid">
+        <MenuCard />
         {items.map((item) => {
           return (
             <div className="menu-item large" key={item.id}>
@@ -29,16 +31,16 @@ function MeatDisplay1() {
                 {item.ingredients && (
                   <p className="item-ingredients">{item.ingredients}</p>
                 )}
-                {/* item.meats && (
+                {item.meat_choices && (
                   <div className="meat-choices">
                     <p className="meat-label">Choice of Meat:</p>
                     <ul className="meat-list">
-                      {item.category!.map((category, idx) => (
-                        <li key={idx}>• {category}</li>
+                      {item.meat_choices.map((meat, idx) => (
+                        <li key={idx}>• {meat}</li>
                       ))}
                     </ul>
                   </div>
-                )} */}
+                )}
               </div>
             </div>
           );

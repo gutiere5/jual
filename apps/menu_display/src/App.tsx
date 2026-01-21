@@ -1,10 +1,10 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import "./App.css";
 
 function App() {
   return (
     <div className="app-container">
-      <div>Store Logo</div>
+      <Link to="/">Store Logo</Link>
       <Outlet />
     </div>
   );

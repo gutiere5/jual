@@ -24,6 +24,18 @@ export const Category = [
   "OTHER",
 ] as const;
 
+export const MeatChoices = [
+  "CARNE_ASADA",
+  "CHORIZO",
+  "TRIPA",
+  "LENGUA",
+  "PASTOR",
+  "CHICHARRONES",
+  "ASADA_DE_POLLO",
+] as const;
+
+const MeatChoicesEnum = z.enum(MeatChoices);
+
 export const StockBatch = z.object({
   quantity_received: z.coerce.number().min(0),
   quantity_remaining: z.coerce.number().min(0),
@@ -59,6 +71,7 @@ export const Item = z
     category: z.enum(Category),
     image_url: z.string().optional(),
 
+    meat_choices: z.array(MeatChoicesEnum).optional().default([]),
     stock_batch: z.array(StockBatch).optional().default([]),
     transaction: z.array(Transaction).optional().default([]),
     waste: z.array(Waste).optional().default([]),

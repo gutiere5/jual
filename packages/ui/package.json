@@ -1,0 +1,22 @@
+{
+  "name": "@repo/ui",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./MenuCard": {
+      "types": "./src/components/MenuCard.tsx",
+      "default": "./dist/components/MenuCard.js"
+    }
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "*",
+    "typescript": "latest"
+  }
+}
