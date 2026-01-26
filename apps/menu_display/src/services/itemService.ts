@@ -59,7 +59,7 @@ const mockItems = [
     vendor_id: 5,
     low_stock_threshold: 10,
     category: "MEAT",
-    image_url: "https://example.com/images/sourdough.jpg",
+    image_url: "https://picsum.photos/500",
     stock_batch: [
       {
         quantity_received: 20,

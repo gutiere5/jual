@@ -2,21 +2,26 @@
   "name": "@repo/ui",
   "type": "module",
   "scripts": {
-    "dev": "tsc --watch",
-    "build": "tsc"
+    "dev": "vite",
+    "build": "vite build"
   },
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "default": "./dist/index.js"
+      "types": "./src/index.d.ts",
+      "import": "./dist/ui.js",
+      "require": "./dist/ui.umd.cjs"
     },
     "./MenuCard": {
-      "types": "./src/components/MenuCard.tsx",
-      "default": "./dist/components/MenuCard.js"
+      "types": "./src/components/MenuCard.d.tsx",
+      "import": "./dist/components/MenuCard.js"
     }
   },
   "devDependencies": {
     "@repo/typescript-config": "*",
-    "typescript": "latest"
+    "typescript": "latest",
+    "@types/node": "latest",
+    "@vitejs/plugin-react": "latest",
+    "vite": "latest",
+    "vite-plugin-dts": "latest"
   }
 }

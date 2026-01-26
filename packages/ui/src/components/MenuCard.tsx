@@ -1,81 +1,18 @@
-// import "./MenuCard.css";
+import type { Item } from "@repo/types/item.schema";
+import "./MenuCard.css";
 
-function MenuCard() {
+function MenuCard(item: Item) {
   return (
-    <>
-      <h1>Hello There</h1>
-    </>
-    // <section className="menu-section">
-    //   {/* Header */}
-    //   <div className="menu-header">
-    //     <div
-    //       className={`icon-wrapper ${data.iconBgClass} ${data.iconColorClass}`}
-    //     >
-    //       <span
-    //         className="material-symbols-outlined"
-    //         style={{ fontSize: "32px" }}
-    //       >
-    //         {data.icon}
-    //       </span>
-    //     </div>
-    //     <h2 className="menu-title">{data.title}</h2>
-    //   </div>
-
-    //   {/* Hero Image */}
-    //   <div className="hero-container">
-    //     <div className="hero-gradient"></div>
-    //     <div className="hero-content">
-    //       {heroItem.isBestSeller && (
-    //         <span className="badge-best-seller">Best Seller</span>
-    //       )}
-    //       <h3>{heroItem.name}</h3>
-    //       <p>{heroItem.description}</p>
-    //     </div>
-    //     <div
-    //       className="hero-image"
-    //       style={{ backgroundImage: `url("${data.heroImage}")` }}
-    //       aria-label={heroItem.name}
-    //     ></div>
-    //   </div>
-
-    //   {/* List Items */}
-    //   <div className="items-list">
-    //     {data.items.map((item) => (
-    //       <div key={item.id} className="menu-item">
-    //         <div style={{ flex: 1 }}>
-    //           <div
-    //             style={{
-    //               display: "flex",
-    //               alignItems: "center",
-    //               gap: "0.5rem",
-    //               flexWrap: "wrap",
-    //             }}
-    //           >
-    //             <h4 className="item-name">{item.name}</h4>
-    //             {item.isVegetarian && (
-    //               <span
-    //                 className="material-symbols-outlined"
-    //                 style={{
-    //                   color: "var(--secondary-green)",
-    //                   fontSize: "18px",
-    //                 }}
-    //                 title="Vegetarian"
-    //               >
-    //                 eco
-    //               </span>
-    //             )}
-    //             {item.isNew && <span className="badge-new">New</span>}
-    //           </div>
-    //           <p className="item-calories">{item.calories} cal</p>
-    //           <p className="item-description">{item.description}</p>
-    //         </div>
-    //         <div>
-    //           <span className="item-price">${item.price.toFixed(2)}</span>
-    //         </div>
-    //       </div>
-    //     ))}
-    //   </div>
-    // </section>
+    <div className="menu-card">
+      <div className="item-image-container">
+        <img className="item-image" src={item.image_url} alt={item.name} />
+      </div>
+      <div className="item-description">
+        <h3 className="item-name">{item.name}</h3>
+        <p className="item-details">{item.description}</p>
+        <p className="item-price">${item.price}</p>
+      </div>
+    </div>
   );
 }
 

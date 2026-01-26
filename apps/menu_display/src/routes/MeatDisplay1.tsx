@@ -6,13 +6,14 @@ import MenuCard from "@repo/ui/MenuCard";
 function MeatDisplay1() {
   const items = useLoaderData() as Item[];
 
+  const firstItem = items?.[0];
+
   return (
     <>
       {/* Main Content Grid */}
-
+      {firstItem && <MenuCard {...firstItem} />}
       <div className="menu-grid">
-        <MenuCard />
-        {items.map((item) => {
+        {/* {items.map((item) => {
           return (
             <div className="menu-item large" key={item.id}>
               <div className="item-image-wrapper">
@@ -44,7 +45,7 @@ function MeatDisplay1() {
               </div>
             </div>
           );
-        })}
+        })} */}
       </div>
     </>
   );
